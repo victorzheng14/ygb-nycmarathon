@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
   <style>
     *,
@@ -17,6 +17,18 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      transition: text-shadow 0.25s ease;
+    }
+
+    h1:hover:not(:has(:hover)),
+    em:hover:not(:has(:hover)),
+    h3:hover:not(:has(:hover)),
+    p:hover:not(:has(:hover)),
+    span:hover:not(:has(:hover)),
+    a:hover:not(:has(:hover)),
+    footer:hover:not(:has(:hover)),
+    .progress-pct:hover:not(:has(:hover)) {
+      text-shadow: 0 0 4px currentColor;
     }
 
     :root {
@@ -26,10 +38,8 @@
       --gold-dim: #c49a20;
       --white: #f5f0e8;
       --muted: rgba(245, 240, 232, 0.55);
-      --border: rgba(245, 240, 232, 0.12);
-      --serif: 'DM Serif Display', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
-      --mono: 'DM Mono', monospace;
+      --border: rgba(245, 240, 232, 0.1);
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     html {
@@ -40,9 +50,10 @@
       background: var(--night);
       color: var(--white);
       font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 18px;
+      line-height: 1.7;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── HERO ── */
@@ -51,32 +62,34 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 3rem 1.5rem 0;
+      padding: 5rem 1.5rem 0;
       overflow: hidden;
     }
 
     .hero-text {
       text-align: center;
-      max-width: 560px;
+      max-width: 760px;
       position: relative;
       z-index: 2;
     }
 
     .eyebrow {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
     h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-family: var(--sans);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-size: clamp(2.4rem, 6.5vw, 4.6rem);
       line-height: 1.1;
       color: var(--white);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     h1 em {
@@ -85,11 +98,12 @@
     }
 
     .hero-sub {
-      font-size: 15px;
+      font-size: 18px;
+      font-weight: 400;
       color: var(--muted);
-      max-width: 400px;
-      margin: 0 auto 1.75rem;
-      line-height: 1.65;
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
     }
 
     .cta-btn {
@@ -98,29 +112,29 @@
       color: var(--night);
       font-family: var(--sans);
       font-size: 14px;
-      font-weight: 500;
-      padding: 12px 28px;
-      border-radius: 999px;
+      font-weight: 600;
+      padding: 14px 30px;
+      border-radius: 8px;
       text-decoration: none;
-      transition: background 0.15s, transform 0.1s;
-      margin-bottom: 2.5rem;
+      transition: opacity 0.15s;
+      margin-bottom: 2.25rem;
     }
 
     .cta-btn:hover {
-      background: #f0d060;
-      transform: translateY(-1px);
+      opacity: 0.88;
     }
 
     /* ── STATS BAR ── */
     .stats-bar {
       display: flex;
       justify-content: center;
+      align-items: stretch;
       gap: 0;
       width: 100%;
-      max-width: 640px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      max-width: 880px;
       background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       position: relative;
       z-index: 2;
     }
@@ -128,34 +142,54 @@
     .stat {
       flex: 1;
       text-align: center;
-      padding: 1rem 0.5rem;
-      border-right: 1px solid var(--border);
+      padding: 1.5rem 0.75rem;
+      position: relative;
     }
 
-    .stat:last-child {
-      border-right: none;
+    .stat::after {
+      content: '';
+      position: absolute;
+      top: 22%;
+      bottom: 22%;
+      right: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .stat:last-child::after {
+      display: none;
     }
 
     .stat-val {
-      font-family: var(--serif);
+      font-family: var(--sans);
+      font-weight: 700;
       font-size: 1.6rem;
       color: var(--white);
       display: block;
-      line-height: 1.1;
+      line-height: 1.2;
     }
 
     .stat-label {
       font-size: 11px;
-      font-family: var(--mono);
+      font-weight: 500;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
+    .stat-remaining {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      opacity: 0.65;
+      margin-top: 2px;
+    }
+
     /* ── PROGRESS ── */
     .progress-wrap {
       width: 100%;
-      max-width: 640px;
+      max-width: 880px;
       margin: 0 auto;
       padding: 0 1.5rem;
       position: relative;
@@ -165,7 +199,6 @@
     .progress-track {
       height: 3px;
       background: var(--border);
-      border-radius: 999px;
       overflow: hidden;
       margin-top: -1px;
     }
@@ -173,15 +206,27 @@
     .progress-fill {
       height: 100%;
       background: var(--gold);
-      border-radius: 999px;
       transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 8px var(--gold-dim);
+    }
+
+    .progress-pct {
+      display: block;
+      margin: 0.85rem auto 1.5rem;
+      padding: 4px 14px;
+      width: fit-content;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      background: rgba(245, 200, 66, 0.08);
+      border-radius: 999px;
+      position: relative;
+      z-index: 2;
     }
 
     /* ── SKYLINE CANVAS ── */
     #skyline-wrap {
       width: 100%;
-      max-width: 720px;
+      max-width: 1000px;
       margin: 0 auto;
       position: relative;
     }
@@ -213,117 +258,343 @@
 
     .tooltip span {
       color: var(--muted);
-      font-family: var(--mono);
+      font-family: var(--sans);
+      font-weight: 500;
       font-size: 11px;
     }
 
     /* ── MIDDLE SECTION ── */
     .mid-section {
-      max-width: 680px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem;
+      padding: 4.5rem 1.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 2rem;
+      border-top: 1px solid var(--border);
     }
 
     @media (max-width: 520px) {
       .mid-section {
         grid-template-columns: 1fr;
+        gap: 2.5rem;
       }
     }
 
     .info-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 14px;
+      padding: 1.75rem;
     }
 
     .info-card h3 {
-      font-family: var(--serif);
+      font-family: var(--sans);
+      font-weight: 700;
       font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       color: var(--white);
     }
 
     .info-card p {
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 400;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     /* ── DONOR ROLL ── */
     .donor-section {
-      max-width: 680px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 0 1.5rem 3rem;
+      padding: 4.5rem 1.5rem;
+      border-top: 1px solid var(--border);
     }
 
     .section-label {
-      font-family: var(--mono);
-      font-size: 11px;
+      font-size: 12px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--muted);
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
     #donor-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
 
     .donor-chip {
-      background: rgba(245, 200, 66, 0.1);
-      border: 1px solid rgba(245, 200, 66, 0.2);
+      background: rgba(245, 200, 66, 0.08);
       color: var(--gold);
-      font-size: 12px;
-      font-family: var(--mono);
-      padding: 4px 12px;
-      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--sans);
+      padding: 6px 14px;
+      border-radius: 6px;
     }
 
     .donor-chip .amount {
       color: var(--muted);
-      margin-left: 4px;
+      margin-left: 6px;
     }
 
     .empty-note {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
       font-style: italic;
+    }
+
+    /* ── TRAINING ── */
+    .training-section {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .training-intro {
+      font-size: 14px;
+      color: var(--muted);
+      margin: -0.5rem 0 2rem;
+    }
+
+    .training-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .training-stat {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+    }
+
+    .training-stat-val {
+      display: block;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .training-stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .mileage-chart-wrap {
+      padding: 0 0.25rem;
+    }
+
+    .mileage-svg {
+      width: 100%;
+      aspect-ratio: 880 / 220;
+      display: block;
+      font-family: var(--sans);
+    }
+
+    .mileage-gridline {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+
+    .mileage-line {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mileage-dot {
+      fill: var(--gold);
+    }
+
+    .mileage-tick-label,
+    .mileage-date-label {
+      fill: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .mileage-value-label {
+      fill: var(--gold);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .mileage-axis-title {
+      fill: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 520px) {
+      .training-stats {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ── FOOTER ── */
     footer {
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 3rem 1.5rem;
       border-top: 1px solid var(--border);
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 400;
       color: var(--muted);
-      font-family: var(--mono);
+      font-family: var(--sans);
     }
 
     footer a {
       color: var(--gold);
       text-decoration: none;
     }
+
+    /* ── SITE HEADER ── */
+    .site-header-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--night);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      gap: 1rem;
+    }
+
+    .hero-divider {
+      width: 64px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto 2.75rem;
+    }
+
+    .header-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .header-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .header-link:hover {
+      color: var(--gold);
+    }
+
+    .header-countdown {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .header-donate {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--night);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .header-donate:hover {
+      opacity: 0.88;
+    }
+
+    @media (max-width: 600px) {
+      .header-nav {
+        gap: 1rem;
+      }
+
+      .header-link {
+        font-size: 12px;
+      }
+
+      .header-countdown {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-name {
+        font-size: 12px;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .header-countdown {
+        font-size: 11px;
+      }
+
+      .header-donate {
+        font-size: 12px;
+        padding: 7px 14px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
+  <div class="site-header-bar">
+    <header class="site-header">
+      <span class="header-name">Victor Zheng</span>
+      <nav class="header-nav">
+        <a class="header-link" href="https://www.yougottabelieve.org/" target="_blank" rel="noopener">You Gotta
+          Believe</a>
+        <a class="header-link" href="#supporters">Supporters</a>
+        <a class="header-link" href="#training">Follow My Training</a>
+      </nav>
+      <span class="header-countdown" id="header-countdown">— days</span>
+      <a class="header-donate" href="https://www.pledge.to/victor-2026-tcs-nyc-marathon-with-team-ygb-9161"
+        target="_blank" rel="noopener">Donate</a>
+    </header>
+  </div>
+
   <section class="hero">
     <div class="hero-text">
-      <p class="eyebrow">NYC Marathon 2026 · You Gotta Believe</p>
-      <h1>Light up <em>New York</em> for T1D</h1>
-      <p class="hero-sub">I'm running 26.2 miles through all five boroughs on November 1st, 2026. Every dollar you
-        donate lights up a window on this skyline — and goes to You Gotta Believe - an organization that helps older
-        youth in foster care find permanent families before they age out of the system.</p>
+      <p class="eyebrow">New York City Marathon 2026 · You Gotta Believe</p>
+      <h1>Light up <em>NYC</em> for YGB</h1>
+      <p class="hero-sub">Hi everyone! I'm running my first ever marathon through all five boroughs of New York City
+        on November 1, 2026. Every dollar you donate lights up a window on this skyline - and goes to You Gotta
+        Believe, an organization that helps older youth in foster care find permanent families before they age out
+        of the system.</p>
       <a class="cta-btn" href="https://www.pledge.to/victor-2026-tcs-nyc-marathon-with-team-ygb-9161" target="_blank"
         rel="noopener">Donate to light a window →</a>
+      <div class="hero-divider"></div>
     </div>
 
     <div class="stats-bar">
@@ -338,6 +609,7 @@
       <div class="stat">
         <span class="stat-val" id="stat-windows">0</span>
         <span class="stat-label">windows lit</span>
+        <span class="stat-remaining" id="stat-windows-remaining"></span>
       </div>
       <div class="stat">
         <span class="stat-val" id="stat-donors">0</span>
@@ -350,6 +622,7 @@
         <div class="progress-fill" id="progress-fill" style="width:0%"></div>
       </div>
     </div>
+    <div class="progress-pct" id="progress-pct">0%</div>
   </section>
 
   <div id="skyline-wrap">
@@ -363,24 +636,41 @@
   <section class="mid-section">
     <div class="info-card">
       <h3>How it works</h3>
-      <p>Donate on my Pledge.to page. Each $25 lights one window. Higher donations light more — up to 25 windows for
-        $500. Watch the city glow as we get closer to $7,500.</p>
+      <p>Donate to my page or venmo @victorzheng8. Every dollar lights up a little more of the skyline - the closer
+        we get to $7,500, the brighter the city glows.</p>
     </div>
     <div class="info-card">
       <h3>Why I'm running</h3>
       <p>I'm running the New York City Marathon in support of You Gotta Believe, an organization dedicated to finding
         permanent families for older youth in foster care. Their mission is simple but life-changing: every young person
-        deserves the love, stability, and belonging of a family. On race day, I'll be carrying the names of everyone who
-        supports this cause with me through all 26.2 miles across New York City. Every donation helps create
-        opportunities for youth who are too often overlooked, and every mile will be a reminder of the impact we're
-        making together.</p>
+        deserves the love, stability, and belonging of a family.</p>
     </div>
   </section>
 
-  <section class="donor-section">
-    <p class="section-label">Donors lighting the skyline</p>
+  <section class="donor-section" id="supporters">
+    <p class="section-label">The real MVPs, helping me light the skyline</p>
     <div id="donor-list">
       <p class="empty-note">Be the first to light a window.</p>
+    </div>
+  </section>
+
+  <section class="training-section" id="training">
+    <p class="section-label">Follow my training</p>
+    <p class="training-intro">Tracking my miles as I build toward race day.</p>
+
+    <div class="training-stats">
+      <div class="training-stat">
+        <span class="training-stat-val" id="stat-miles-last-month">0</span>
+        <span class="training-stat-label">miles ran last month</span>
+      </div>
+      <div class="training-stat">
+        <span class="training-stat-val" id="stat-miles-this-month">0</span>
+        <span class="training-stat-label">miles run this month</span>
+      </div>
+    </div>
+
+    <div class="mileage-chart-wrap">
+      <svg class="mileage-svg" id="mileage-svg" viewBox="0 0 880 220"></svg>
     </div>
   </section>
 
@@ -411,7 +701,7 @@
       { order: 11, name: "Calvin Zhu", amount: 50 },
       { order: 12, name: "Sophia Reyes", amount: 10 },
       { order: 13, name: "Priya Patel", amount: 20 },
-      { order: 14, name: "Alyssa Sabando", amount: 15 },
+      { order: 14, name: "Alyssa Carson", amount: 15 },
       { order: 15, name: "Jill Czarnik", amount: 100 },
       { order: 16, name: "David Edenhoffer", amount: 25 },
       { order: 17, name: "Michael Reese", amount: 50 },
@@ -441,7 +731,21 @@
       // { order: 3, name: "The Chen Family", amount: 250 },
     ];
 
-    const GOAL = 5000;
+    const GOAL = 7500;
+
+    // ═══════════════════════════════════════════════════════════
+    // EDIT THESE TO UPDATE YOUR TRAINING STATS
+    // miles last month, miles this month, and weekly mileage
+    // (week beginning date, total miles that week) — add a new
+    // row each week, leave miles as 0 until that week is logged
+    // ═══════════════════════════════════════════════════════════
+    const MILES_LAST_MONTH = 8.2;
+    const MILES_THIS_MONTH = 33.4;
+    const WEEKLY_MILEAGE = [
+      { week: "5/31/26", miles: 10.47 },
+      { week: "6/7/26", miles: 15.2 },
+      { week: "6/14/26", miles: 7.69 },
+    ];
 
     // ─────────────────────────────────────────────
     // BUILDINGS
@@ -465,12 +769,8 @@
     const BLDG_COLORS = ['#0e1c35', '#112040', '#0c1828', '#0e1c35', '#122038', '#0f1d38', '#0c1828', '#112040', '#0e1c35', '#0c1828', '#112040', '#0e1c35', '#0c1828', '#112040'];
     const GROUND_Y = 260;
     const WIN_COLORS = ['#f5c842', '#fff2a0', '#ffd966', '#ffe680', '#ffc840'];
-    const TIER_MAP = { 25: 1, 50: 2, 75: 3, 100: 5, 150: 7, 200: 9, 250: 12, 300: 15, 500: 25 };
-
     function windowsForAmount(amt) {
-      const tiers = Object.keys(TIER_MAP).map(Number).sort((a, b) => b - a);
-      for (const t of tiers) { if (amt >= t) return TIER_MAP[t]; }
-      return Math.max(1, Math.round(amt / 25));
+      return Math.max(1, Math.round(amt / GOAL * allWindows.length));
     }
 
     let allWindows = [];
@@ -632,10 +932,14 @@
     function updateUI() {
       const raised = DONORS.reduce((sum, d) => sum + d.amount, 0);
       document.getElementById('stat-raised').textContent = '$' + raised.toLocaleString();
-      document.getElementById('stat-windows').textContent = allWindows.filter(w => w.lit).length;
+      const litCount = allWindows.filter(w => w.lit).length;
+      document.getElementById('stat-windows').textContent = litCount;
+      document.getElementById('stat-windows-remaining').textContent =
+        Math.max(0, allWindows.length - litCount).toLocaleString() + ' left';
       document.getElementById('stat-donors').textContent = DONORS.length;
       const pct = Math.min(100, Math.round(raised / GOAL * 100));
       document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-pct').textContent = pct + '%';
 
       const list = document.getElementById('donor-list');
       if (DONORS.length === 0) {
@@ -647,6 +951,54 @@
       }
     }
 
+    function renderTraining() {
+      document.getElementById('stat-miles-last-month').textContent = MILES_LAST_MONTH;
+      document.getElementById('stat-miles-this-month').textContent = MILES_THIS_MONTH;
+
+      const n = WEEKLY_MILEAGE.length;
+      const left = 70, right = 850, top = 36, bottom = 165;
+
+      const maxMiles = Math.max(...WEEKLY_MILEAGE.map(w => w.miles), 1);
+      const niceMax = Math.ceil(maxMiles / 10) * 10;
+      const ticks = [];
+      for (let t = 0; t <= niceMax; t += 10) ticks.push(t);
+
+      const points = WEEKLY_MILEAGE.map((w, i) => ({
+        x: n === 1 ? (left + right) / 2 : left + i * (right - left) / (n - 1),
+        y: bottom - (w.miles / niceMax) * (bottom - top),
+        miles: w.miles,
+        week: w.week.split('/').slice(0, 2).join('/'),
+      }));
+
+      const gridlines = ticks.map(t => {
+        const y = bottom - (t / niceMax) * (bottom - top);
+        return `
+          <line class="mileage-gridline" x1="${left}" y1="${y}" x2="${right}" y2="${y}"></line>
+          <text class="mileage-tick-label" x="${left - 14}" y="${y + 4}" text-anchor="end">${t}</text>
+        `;
+      }).join('');
+
+      const linePoints = points.map(p => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
+
+      const dots = points.map(p => `
+        <text class="mileage-value-label" x="${p.x.toFixed(2)}" y="${p.y - 14}" text-anchor="middle">${p.miles.toFixed(1)}</text>
+        <circle class="mileage-dot" cx="${p.x.toFixed(2)}" cy="${p.y.toFixed(2)}" r="4"></circle>
+        <text class="mileage-date-label" x="${p.x.toFixed(2)}" y="${bottom + 24}" text-anchor="middle">${p.week}</text>
+      `).join('');
+
+      const midY = (top + bottom) / 2;
+      const midX = (left + right) / 2;
+
+      document.getElementById('mileage-svg').innerHTML = `
+        ${gridlines}
+        <polyline class="mileage-line" points="${linePoints}"></polyline>
+        ${dots}
+        <text class="mileage-axis-title" x="22" y="${midY}" text-anchor="middle"
+          transform="rotate(-90 22 ${midY})">Miles run (mi)</text>
+        <text class="mileage-axis-title" x="${midX}" y="${bottom + 50}" text-anchor="middle">Week beginning</text>
+      `;
+    }
+
     // ─────────────────────────────────────────────
     // INIT
     // ─────────────────────────────────────────────
@@ -655,6 +1007,12 @@
     resize();
     window.addEventListener('resize', resize);
     updateUI();
+    renderTraining();
+
+    const RACE_DATE = new Date('2026-11-01T00:00:00');
+    const daysLeft = Math.ceil((RACE_DATE - new Date()) / (1000 * 60 * 60 * 24));
+    document.getElementById('header-countdown').textContent =
+      daysLeft > 0 ? daysLeft.toLocaleString() + ' days' : 'Race day!';
   </script>
 </body>
 
