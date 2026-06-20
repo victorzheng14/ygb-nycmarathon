@@ -487,12 +487,19 @@
     }
 
     .site-header {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       max-width: 1000px;
       margin: 0 auto;
       padding: 1.25rem 1.5rem;
+      gap: 1rem;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
       gap: 1rem;
     }
 
@@ -513,6 +520,15 @@
       display: flex;
       align-items: center;
       gap: 1.75rem;
+    }
+
+    @media (min-width: 781px) {
+      .header-nav {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
 
     .header-link {
@@ -596,9 +612,11 @@
         <a class="header-link" href="#supporters">Supporters</a>
         <a class="header-link" href="#training">Follow My Training</a>
       </nav>
-      <span class="header-countdown" id="header-countdown">— days</span>
-      <a class="header-donate" href="https://www.pledge.to/victor-2026-tcs-nyc-marathon-with-team-ygb-9161"
-        target="_blank" rel="noopener">Donate</a>
+      <div class="header-right">
+        <span class="header-countdown" id="header-countdown">— days</span>
+        <a class="header-donate" href="https://www.pledge.to/victor-2026-tcs-nyc-marathon-with-team-ygb-9161"
+          target="_blank" rel="noopener">Donate</a>
+      </div>
     </header>
   </div>
 
