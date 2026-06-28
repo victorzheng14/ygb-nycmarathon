@@ -389,6 +389,18 @@
       font-family: var(--sans);
       padding: 6px 14px;
       border-radius: 6px;
+      cursor: default;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+      user-select: none;
+    }
+
+    .donor-chip:hover,
+    .donor-chip:focus,
+    .donor-chip.is-active {
+      background: rgba(63, 82, 103, 0.2);
+      border-color: rgba(63, 82, 103, 0.5);
+      color: var(--accent);
+      outline: none;
     }
 
     .empty-note {
@@ -736,6 +748,15 @@
     </div>
   </section>
 
+  <section class="donor-section" id="supporters" tabindex="-1">
+    <div class="section-head">
+      <h2 class="section-label">The real MVPs, helping me light the skyline</h2>
+    </div>
+    <ul id="donor-list">
+      <li class="empty-note">Be the first to light a window.</li>
+    </ul>
+  </section>
+
   <div id="skyline-wrap">
     <canvas id="skyline-canvas" aria-hidden="true" role="presentation"></canvas>
     <div class="tooltip" id="tooltip" aria-hidden="true">
@@ -756,15 +777,6 @@
         permanent families for older youth in foster care. Their mission is simple but life-changing: every young person
         deserves the love, stability, and belonging of a family.</p>
     </div>
-  </section>
-
-  <section class="donor-section" id="supporters" tabindex="-1">
-    <div class="section-head">
-      <h2 class="section-label">The real MVPs, helping me light the skyline</h2>
-    </div>
-    <ul id="donor-list">
-      <li class="empty-note">Be the first to light a window.</li>
-    </ul>
   </section>
 
   <section class="training-section" id="training" tabindex="-1">
@@ -904,6 +916,7 @@
     }
 
     let allWindows = [];
+    let highlightedDonor = null;
 
     function buildWindows() {
       allWindows = [];
@@ -954,10 +967,13 @@
       sky.addColorStop(1, '#142035');
       c.fillStyle = sky; c.fillRect(0, 0, W, H);
 
-      const litCount = allWindows.filter(w => w.lit).length;
-      if (litCount > 0) {
+      const activeWindows = highlightedDonor
+        ? allWindows.filter(w => w.lit && w.donor === highlightedDonor)
+        : allWindows.filter(w => w.lit);
+
+      if (activeWindows.length > 0) {
         const glow = c.createRadialGradient(W / 2, H * 0.55, 0, W / 2, H * 0.55, W * 0.65);
-        const a = Math.min(0.22, litCount / allWindows.length * 0.9);
+        const a = highlightedDonor ? 0.28 : Math.min(0.22, activeWindows.length / allWindows.length * 0.9);
         glow.addColorStop(0, `rgba(245,200,66,${a})`);
         glow.addColorStop(1, 'rgba(245,200,66,0)');
         c.fillStyle = glow; c.fillRect(0, 0, W, H);
@@ -989,11 +1005,14 @@
         const wx = w.bx * scale, wy = w.by * scale;
         const ww = w.bw * scale, wh = w.bh * scale;
         if (w.lit) {
+          const isActive = !highlightedDonor || w.donor === highlightedDonor;
+          c.globalAlpha = isActive ? 1 : 0.07;
           c.fillStyle = w.color;
-          c.shadowColor = w.color;
-          c.shadowBlur = 5 * scale;
+          c.shadowColor = isActive ? w.color : 'transparent';
+          c.shadowBlur = isActive ? (highlightedDonor ? 10 : 5) * scale : 0;
           c.fillRect(wx, wy, ww, wh);
           c.shadowBlur = 0;
+          c.globalAlpha = 1;
         } else {
           c.fillStyle = 'rgba(255,255,255,0.035)';
           c.fillRect(wx, wy, ww, wh);
@@ -1003,10 +1022,10 @@
       c.fillStyle = '#04090f';
       c.fillRect(0, gY, W, H - gY);
 
-      allWindows.filter(w => w.lit).forEach(w => {
+      activeWindows.forEach(w => {
         const cx2 = (w.bx + w.bw / 2) * scale;
         const rg = c.createLinearGradient(cx2, gY, cx2, H);
-        rg.addColorStop(0, 'rgba(245,200,66,0.07)');
+        rg.addColorStop(0, highlightedDonor ? 'rgba(245,200,66,0.14)' : 'rgba(245,200,66,0.07)');
         rg.addColorStop(1, 'rgba(245,200,66,0)');
         c.fillStyle = rg;
         c.fillRect(cx2 - 2 * scale, gY, 4 * scale, H - gY);
@@ -1024,17 +1043,24 @@
         }
       }
       const tt = document.getElementById('tooltip');
+      const prev = highlightedDonor;
       if (found) {
         tt.style.opacity = '1';
         tt.style.left = (e.clientX - rect.left + 14) + 'px';
         tt.style.top = (e.clientY - rect.top - 8) + 'px';
         document.getElementById('tt-name').textContent = found.donor;
         document.getElementById('tt-detail').textContent = 'lit this window';
+        highlightedDonor = found.donor;
       } else {
         tt.style.opacity = '0';
+        highlightedDonor = null;
       }
+      if (highlightedDonor !== prev) draw();
     });
-    canvas.addEventListener('mouseleave', () => { document.getElementById('tooltip').style.opacity = '0'; });
+    canvas.addEventListener('mouseleave', () => {
+      document.getElementById('tooltip').style.opacity = '0';
+      if (highlightedDonor !== null) { highlightedDonor = null; draw(); }
+    });
 
     function seededRand(seed) {
       let s = seed;
@@ -1077,8 +1103,14 @@
         list.innerHTML = '<li class="empty-note">Be the first to light a window.</li>';
       } else {
         list.innerHTML = visibleDonors.map(d =>
-          `<li class="donor-chip">${d.name}</li>`
+          `<li class="donor-chip" data-donor="${d.name}" tabindex="0">${d.name}</li>`
         ).join('');
+        list.querySelectorAll('.donor-chip').forEach(chip => {
+          chip.addEventListener('mouseenter', () => { highlightedDonor = chip.dataset.donor; draw(); });
+          chip.addEventListener('mouseleave', () => { highlightedDonor = null; draw(); });
+          chip.addEventListener('focus', () => { highlightedDonor = chip.dataset.donor; draw(); });
+          chip.addEventListener('blur', () => { highlightedDonor = null; draw(); });
+        });
       }
     }
 
